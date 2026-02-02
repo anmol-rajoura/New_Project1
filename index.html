@@ -3,176 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERROR</title>
+<title>Session Active</title>
 
 <style>
-  * { box-sizing: border-box; }
-
   body {
     margin: 0;
     height: 100vh;
-    background: #000;
-    overflow: hidden;
-    font-family: monospace;
-    cursor: none;
+    background: #f4f4f4;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* SCREEN NOISE */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 1px,
-        transparent 1px,
-        transparent 2px
-      );
-    pointer-events: none;
-    animation: noise 0.15s infinite;
+  .panel {
+    width: 90%;
+    max-width: 520px;
+    padding: 40px;
+    border: 1px solid #ddd;
+    text-align: left;
   }
 
-  @keyframes noise {
-    0% { opacity: 0.1; }
-    50% { opacity: 0.3; }
-    100% { opacity: 0.1; }
+  .status {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 30px;
   }
 
-  /* MAIN TEXT */
-  #message {
-    position: absolute;
-    top: 30%;
-    width: 100%;
-    text-align: center;
-    font-size: clamp(1.8rem, 6vw, 3rem);
-    color: #ff0033;
-    text-shadow: 0 0 20px red;
-    animation: glitch 0.4s infinite;
+  .text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    min-height: 80px;
   }
 
-  @keyframes glitch {
-    0% { transform: translate(0,0); }
-    20% { transform: translate(-2px,1px); }
-    40% { transform: translate(2px,-1px); }
-    60% { transform: translate(-1px,2px); }
-    80% { transform: translate(1px,-2px); }
-    100% { transform: translate(0,0); }
-  }
-
-  /* RUN BUTTON */
-  #run {
-    position: absolute;
-    padding: 14px 36px;
-    font-size: 1rem;
-    color: #00ff9c;
+  button {
+    margin-top: 30px;
+    padding: 10px 18px;
+    border: 1px solid #aaa;
     background: transparent;
-    border: 2px solid #00ff9c;
-    text-shadow: 0 0 10px #00ff9c;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: transform 0.08s linear;
   }
 
-  /* CURSOR DOT */
-  #eye {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    background: red;
-    border-radius: 50%;
-    pointer-events: none;
-    box-shadow: 0 0 15px red;
-  }
-
-  /* FLASH */
-  .flash {
-    position: fixed;
-    inset: 0;
-    background: red;
-    opacity: 0.2;
-    animation: flash 0.1s forwards;
-  }
-
-  @keyframes flash {
-    to { opacity: 0; }
+  button:hover {
+    background: #eee;
   }
 </style>
 </head>
 
 <body>
 
-<div id="message">YOU SHOULD NOT BE HERE</div>
-<button id="run">RUN</button>
-<div id="eye"></div>
+<div class="panel">
+  <div class="status">SESSION INITIALIZED</div>
+  <div class="text" id="text">
+    You opened this page voluntarily.
+  </div>
+  <button id="action">Continue</button>
+</div>
 
 <script>
-  const messages = [
-    "YOU SHOULD NOT BE HERE",
-    "WHY ARE YOU STILL LOOKING",
-    "STOP INTERACTING",
-    "IT KNOWS WHERE YOU ARE",
-    "THIS IS NOT A GAME",
-    "CLOSE THE TAB",
-    "TOO LATE"
+  const text = document.getElementById("text");
+  const action = document.getElementById("action");
+
+  const stages = [
+    "You opened this page voluntarily.",
+    "You stayed longer than most people.",
+    "You are still reading.",
+    "You seem curious.",
+    "Curiosity usually comes with consequences.",
+    "You could stop at any moment.",
+    "You won’t, though.",
+    "That’s consistent with your past behavior.",
+    "You hesitate, but you don’t leave.",
+    "People like you rarely do.",
+    "You are being very predictable.",
+    "This isn’t interesting anymore.",
+    "Neither are you."
   ];
 
-  const msg = document.getElementById("message");
-  const run = document.getElementById("run");
-  const eye = document.getElementById("eye");
+  let index = 0;
 
-  let clicks = 0;
+  action.addEventListener("click", () => {
+    index++;
 
-  function moveRun() {
-    const padding = 20;
-    const x = Math.random() * (window.innerWidth - run.offsetWidth - padding);
-    const y = Math.random() * (window.innerHeight - run.offsetHeight - padding);
-    run.style.left = x + "px";
-    run.style.top = y + "px";
-  }
-
-  moveRun();
-
-  run.addEventListener("mouseenter", () => {
-    moveRun();
-    escalate();
-  });
-
-  run.addEventListener("click", escalate);
-
-  function escalate() {
-    clicks++;
-    msg.innerText = messages[Math.min(clicks, messages.length - 1)];
-    document.body.appendChild(Object.assign(document.createElement("div"), { className: "flash" }));
-
-    if (clicks > 4) {
-      msg.style.color = "#00ff9c";
-      msg.innerText = "IT IS INSIDE NOW";
-    }
-
-    if (clicks > 6) {
+    if (index < stages.length) {
+      text.innerText = stages[index];
+    } else {
       document.body.innerHTML = `
         <div style="
-          height:100vh;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          color:red;
-          font-size:3rem;
           text-align:center;
-          font-family:monospace;
-          animation: glitch 0.2s infinite;
+          font-size:1.5rem;
+          color:#111;
         ">
-          DO NOT TURN AROUND
+          Session complete.<br><br>
+          You may leave now.
         </div>
       `;
     }
-  }
-
-  // CURSOR TRACKING
-  document.addEventListener("mousemove", e => {
-    eye.style.left = e.clientX + "px";
-    eye.style.top = e.clientY + "px";
   });
 </script>
 
