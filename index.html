@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You Are Not Alone</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0b0b0b, #000);
+    font-family: 'Times New Roman', serif;
+    overflow: hidden;
+    color: #cfcfcf;
+  }
+
+  /* CENTER ZONE */
+  .center {
+    position: relative;
+    top: 18%;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: normal;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    animation: breathe 4s infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 0.5; }
+  }
+
+  /* BUTTONS */
+  .action {
+    margin-top: 40px;
+    padding: 14px 46px;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    border-radius: 0;
+    border: 1px solid #444;
+    background: transparent;
+    color: #cfcfcf;
+    cursor: pointer;
+  }
+
+  .action:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* MOVING ZONE */
+  .escape-wrapper {
+    position: absolute;
+    width: 240px;
+    text-align: center;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s linear;
+  }
+
+  #whisper {
+    min-height: 30px;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: #8a8a8a;
+    letter-spacing: 1px;
+    animation: distort 0.3s;
+  }
+
+  @keyframes distort {
+    0% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    100% { transform: translateX(0); }
+  }
+
+  #leaveBtn {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #222;
+    background: #050505;
+    color: #777;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+
+  /* SHADOW FLICKER */
+  .shadow {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255,255,255,0.04), transparent);
+    animation: fade 6s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes fade {
+    0%,100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="center">
+  <h1>YOU ARE ALREADY HERE</h1>
+  <button class="action" onclick="stay()">STAY</button>
+</div>
+
+<div class="escape-wrapper" id="escapeWrapper">
+  <div id="whisper">You thought you had a choice.</div>
+  <button id="leaveBtn" onclick="leave()">LEAVE</button>
+</div>
+
+<script>
+  const whispers = [
+    "You didn’t arrive by accident.",
+    "Something noticed you.",
+    "Leaving was never an option.",
+    "It knows you’re reading this.",
+    "You’ve been quiet for too long.",
+    "Why are you still trying?",
+    "It’s closer now."
+  ];
+
+  const wrapper = document.getElementById("escapeWrapper");
+  const text = document.getElementById("whisper");
+
+  function leave() {
+    const padding = 20;
+    const w = 240;
+    const h = 90;
+
+    const maxX = window.innerWidth - w - padding;
+    const maxY = window.innerHeight - h - padding;
+
+    const x = Math.random() * maxX + padding;
+    const y = Math.random() * maxY + padding;
+
+    wrapper.style.transform = `translate(${x}px, ${y}px)`;
+
+    text.innerText = whispers[Math.floor(Math.random() * whispers.length)];
+
+    spawnShadow();
+  }
+
+  function spawnShadow() {
+    const s = document.createElement("div");
+    s.className = "shadow";
+    s.style.left = Math.random() * window.innerWidth + "px";
+    s.style.top = Math.random() * window.innerHeight + "px";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 6000);
+  }
+
+  function stay() {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        font-family:'Times New Roman', serif;
+        color:#888;
+      ">
+        <h1>
+          GOOD.<br><br>
+          IT WAS WAITING.
+        </h1>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
