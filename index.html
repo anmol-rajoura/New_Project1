@@ -19,7 +19,7 @@
     background: linear-gradient(135deg, #ffe6ec, #fdf1f8);
   }
 
-  /* 🌸 Soft romantic moving glow */
+  /* 🌸 Soft romantic glow blobs */
   .glow {
     position: absolute;
     width: 320px;
@@ -28,6 +28,7 @@
     filter: blur(90px);
     opacity: 0.6;
     animation: drift 20s infinite alternate ease-in-out;
+    z-index: 0;
   }
 
   .glow.one { background: #ff9a9e; top: 8%; left: 8%; }
@@ -39,13 +40,34 @@
     to { transform: translate(120px, -80px); }
   }
 
-  /* 👫 Cute background couples */
+  /* 🖼️ Romantic illustration images */
+  .bg-image {
+    position: fixed;
+    width: 260px;
+    opacity: 0.2;
+    filter: blur(1px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .bg-left {
+    bottom: 5%;
+    left: 5%;
+  }
+
+  .bg-right {
+    top: 6%;
+    right: 6%;
+  }
+
+  /* 👫 Cute floating couple emojis */
   .couple {
     position: fixed;
     font-size: 36px;
     opacity: 0.25;
     animation: floatUp 16s linear infinite;
     pointer-events: none;
+    z-index: 1;
   }
 
   @keyframes floatUp {
@@ -75,7 +97,7 @@
   .text {
     font-size: 1.12rem;
     line-height: 1.7;
-    min-height: 130px;
+    min-height: 150px;
     white-space: pre-line;
     color: #333;
   }
@@ -111,6 +133,7 @@
     font-size: 16px;
     animation: floatHeart 2.6s ease-out forwards;
     pointer-events: none;
+    z-index: 3;
   }
 
   @keyframes floatHeart {
@@ -127,12 +150,26 @@
 <div class="glow two"></div>
 <div class="glow three"></div>
 
-<!-- 👫 Cute background cameos -->
+<!-- 🖼️ Background illustrations (replace URLs if you want) -->
+<img
+  src="https://raw.githubusercontent.com/anmolrajora/assets/main/couple-coffee.png"
+  class="bg-image bg-left"
+  alt="Cute couple illustration"
+/>
+
+<img
+  src="https://raw.githubusercontent.com/anmolrajora/assets/main/love-doodle.png"
+  class="bg-image bg-right"
+  alt="Love illustration"
+/>
+
+<!-- 👫 Floating cute couples -->
 <div class="couple" style="left:12%;">👫</div>
 <div class="couple" style="left:32%; animation-duration:18s;">💑</div>
 <div class="couple" style="left:58%; animation-duration:20s;">👩‍❤️‍👨</div>
 <div class="couple" style="left:78%; animation-duration:22s;">🐻‍❄️🐻</div>
 
+<!-- 💌 Main content -->
 <div class="card">
   <div class="text" id="text">
     Hey.
@@ -147,14 +184,15 @@
     "Hey.\n\nSo… we’ve known each other for about 6 years now.",
     "Which honestly means we’ve survived awkward phases,\nrandom conversations,\nand a lot of pretending we don’t remember things 😄",
     "Somewhere in between all of that,\nI realised something.",
+    "I like you.\nNot in a dramatic-movie way.\nMore in a quiet, real way.",
     "You’re genuinely beautiful.\nNot just how you look — though that too 😌",
-    "It’s the way you carry yourself.\nYour style.\nThat calm confidence that’s very *you*.",
-    "And your smile?\nThat one catches people off guard.\nIn the best way.",
+    "It’s the way you carry yourself.\nYour style.\nThat calm confidence that’s very you.",
+    "And your smile?\nThat one sneaks up on people.\nIn the best way.",
     "But honestly, it’s the kind of person you are\nthat makes everything else matter more.",
-    "You’re thoughtful.\nEasy to be around.\nAnd somehow always leave things a little lighter.",
+    "You’re thoughtful.\nEasy to be around.\nAnd somehow you make things feel lighter.",
     "This isn’t me trying to be smooth.\n(It’s clearly not working 😅)",
     "It’s just me being honest.\nAnd a little brave.",
-    "No pressure. No expectations.\nJust a thought I wanted to share.",
+    "No pressure. No expectations.\nJust something I wanted to share.",
     "If one day you’d like to turn this\ninto a coffee, a walk,\nor just more us talking…",
     "I’d really enjoy that 🙂"
   ];
