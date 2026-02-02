@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Just Something I Wanted to Say</title>
+<title>Just Us</title>
 
 <style>
   * { box-sizing: border-box; }
@@ -11,97 +11,122 @@
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    background: linear-gradient(135deg, #fff1f5, #fce7f3);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #333;
+    overflow: hidden;
+  }
+
+  /* SOFT BACKGROUND COUPLES */
+  .couple {
+    position: fixed;
+    font-size: 42px;
+    opacity: 0.15;
+    animation: floatSlow 10s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes floatSlow {
+    from { transform: translateY(110vh); }
+    to { transform: translateY(-120vh); }
   }
 
   .card {
-    width: 90%;
+    width: 92%;
     max-width: 420px;
     background: white;
-    border-radius: 20px;
-    padding: 40px 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    border-radius: 24px;
+    padding: 36px 28px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.12);
     text-align: center;
-    animation: fadeIn 0.8s ease;
+    animation: fadeUp 0.8s ease;
+    position: relative;
+    z-index: 2;
   }
 
-  @keyframes fadeIn {
+  @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .text {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    min-height: 90px;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    min-height: 110px;
+    white-space: pre-line;
+    color: #333;
   }
 
   button {
-    margin-top: 30px;
-    padding: 12px 26px;
+    margin-top: 26px;
+    padding: 12px 28px;
     border-radius: 30px;
     border: none;
-    background: #ff6f91;
+    background: #ff7aa2;
     color: white;
     font-size: 1rem;
     cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255,122,162,0.45);
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 20px rgba(255,111,145,0.4);
   }
 
   button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 26px rgba(255,111,145,0.5);
+    box-shadow: 0 14px 30px rgba(255,122,162,0.55);
   }
 
-  .soft {
-    background: #e0e0e0;
+  button.soft {
+    background: #e5e7eb;
     color: #555;
     box-shadow: none;
+    cursor: default;
   }
 
+  /* FLOATING HEARTS */
   .heart {
     position: fixed;
     font-size: 16px;
-    animation: float 2.5s ease-out forwards;
+    animation: floatHeart 2.5s ease-out forwards;
     pointer-events: none;
   }
 
-  @keyframes float {
+  @keyframes floatHeart {
     from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-80px); }
+    to { opacity: 0; transform: translateY(-90px); }
   }
 </style>
 </head>
 
 <body>
 
+<!-- Background cartoon couples -->
+<div class="couple" style="left:10%;">👫</div>
+<div class="couple" style="left:70%; animation-duration:12s;">💑</div>
+<div class="couple" style="left:40%; animation-duration:9s;">👩‍❤️‍👨</div>
+
 <div class="card">
   <div class="text" id="text">
-    Hi.<br><br>
-    This is a little unusual, I know.
+    Hey.
+    <br><br>
+    We’ve known each other for… what, 6 years now?
   </div>
   <button id="btn">Continue</button>
 </div>
 
 <script>
   const messages = [
-    "Hi.\n\nThis is a little unusual, I know.",
-    "But sometimes the best things start with a bit of courage.",
-    "I just wanted a moment of your attention.",
-    "Not to impress you.",
-    "Not to pressure you.",
-    "Just to be honest.",
-    "I like the way you exist.",
-    "And I’d love to get to know you better.",
-    "No expectations.",
-    "Just a coffee. Or a walk. Or a conversation.",
-    "If that’s something you’d like too."
+    "Hey.\n\nWe’ve known each other for… what, 6 years now?",
+    "That’s a long time.\nLong enough for awkward moments.\nLong enough for inside jokes.",
+    "Long enough that this isn’t a random crush.",
+    "Somewhere between all those conversations,\nI started liking you.",
+    "Not suddenly.\nNot dramatically.\nJust… naturally.",
+    "You’re funny without trying.\nComforting without knowing.\nAnd honestly — very you.",
+    "I’m not here to make things weird.",
+    "Just thought you deserved honesty.\nAnd maybe a smile.",
+    "If someday you’d like to turn this\ninto a coffee, a walk, or just more us talking…",
+    "I’d really like that."
   ];
 
   const text = document.getElementById("text");
@@ -115,7 +140,7 @@
       text.innerText = messages[index];
       spawnHeart();
     } else {
-      btn.innerText = "That’s all 🙂";
+      btn.innerText = "That’s it 🙂";
       btn.classList.add("soft");
       btn.disabled = true;
     }
@@ -124,9 +149,9 @@
   function spawnHeart() {
     const h = document.createElement("div");
     h.className = "heart";
-    h.innerText = "💖";
+    h.innerText = Math.random() > 0.5 ? "💖" : "✨";
     h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.bottom = "20px";
+    h.style.bottom = "30px";
     document.body.appendChild(h);
     setTimeout(() => h.remove(), 2500);
   }
