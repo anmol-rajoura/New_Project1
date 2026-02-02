@@ -1,108 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Session Active</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Just Something I Wanted to Say</title>
 
 <style>
+  * { box-sizing: border-box; }
+
   body {
     margin: 0;
     height: 100vh;
-    background: #f4f4f4;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont;
-    color: #111;
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #333;
   }
 
-  .panel {
+  .card {
     width: 90%;
-    max-width: 520px;
-    padding: 40px;
-    border: 1px solid #ddd;
-    text-align: left;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    text-align: center;
+    animation: fadeIn 0.8s ease;
   }
 
-  .status {
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    color: #888;
-    margin-bottom: 30px;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .text {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     line-height: 1.6;
-    min-height: 80px;
+    min-height: 90px;
   }
 
   button {
     margin-top: 30px;
-    padding: 10px 18px;
-    border: 1px solid #aaa;
-    background: transparent;
-    font-size: 0.9rem;
+    padding: 12px 26px;
+    border-radius: 30px;
+    border: none;
+    background: #ff6f91;
+    color: white;
+    font-size: 1rem;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 20px rgba(255,111,145,0.4);
   }
 
   button:hover {
-    background: #eee;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(255,111,145,0.5);
+  }
+
+  .soft {
+    background: #e0e0e0;
+    color: #555;
+    box-shadow: none;
+  }
+
+  .heart {
+    position: fixed;
+    font-size: 16px;
+    animation: float 2.5s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-80px); }
   }
 </style>
 </head>
 
 <body>
 
-<div class="panel">
-  <div class="status">SESSION INITIALIZED</div>
+<div class="card">
   <div class="text" id="text">
-    You opened this page voluntarily.
+    Hi.<br><br>
+    This is a little unusual, I know.
   </div>
-  <button id="action">Continue</button>
+  <button id="btn">Continue</button>
 </div>
 
 <script>
-  const text = document.getElementById("text");
-  const action = document.getElementById("action");
-
-  const stages = [
-    "You opened this page voluntarily.",
-    "You stayed longer than most people.",
-    "You are still reading.",
-    "You seem curious.",
-    "Curiosity usually comes with consequences.",
-    "You could stop at any moment.",
-    "You won’t, though.",
-    "That’s consistent with your past behavior.",
-    "You hesitate, but you don’t leave.",
-    "People like you rarely do.",
-    "You are being very predictable.",
-    "This isn’t interesting anymore.",
-    "Neither are you."
+  const messages = [
+    "Hi.\n\nThis is a little unusual, I know.",
+    "But sometimes the best things start with a bit of courage.",
+    "I just wanted a moment of your attention.",
+    "Not to impress you.",
+    "Not to pressure you.",
+    "Just to be honest.",
+    "I like the way you exist.",
+    "And I’d love to get to know you better.",
+    "No expectations.",
+    "Just a coffee. Or a walk. Or a conversation.",
+    "If that’s something you’d like too."
   ];
 
+  const text = document.getElementById("text");
+  const btn = document.getElementById("btn");
   let index = 0;
 
-  action.addEventListener("click", () => {
+  btn.addEventListener("click", () => {
     index++;
 
-    if (index < stages.length) {
-      text.innerText = stages[index];
+    if (index < messages.length) {
+      text.innerText = messages[index];
+      spawnHeart();
     } else {
-      document.body.innerHTML = `
-        <div style="
-          text-align:center;
-          font-size:1.5rem;
-          color:#111;
-        ">
-          Session complete.<br><br>
-          You may leave now.
-        </div>
-      `;
+      btn.innerText = "That’s all 🙂";
+      btn.classList.add("soft");
+      btn.disabled = true;
     }
   });
+
+  function spawnHeart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "💖";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.bottom = "20px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 2500);
+  }
 </script>
 
 </body>
